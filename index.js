@@ -4,11 +4,12 @@ const user = require('./database/routes/user')
 const casetest = require('./database/routes/casetest')
 const cors = require('cors')
 const app = express();
+require('dotenv').config()
 
 app.use(express.json());
 app.use(cors());
-
-const PORT = 8000;
+console.log(process.env.PORT)
+const PORT = process.env.PORT || 8000;
 
 app.use('/user',user)
 app.use('/casetest',casetest)
