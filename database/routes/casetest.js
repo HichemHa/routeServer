@@ -33,6 +33,8 @@ router.post('/addcase', upload.single('image'), async (req, res) => {
             "image":imageUrl,
             "localisation":obj,
             "caseType":req.body.caseType,
+            "caseDet":req.body.caseDet,
+            "gouve":req.body.gouve,
             "detail":req.body.detail
         }
         const newCase = new Case(dataToInsert);

@@ -6,6 +6,8 @@ const caseSchema = mongoose.Schema({
     localisation:Object,
     route:String,
     caseType:String,
+    caseDet:String,
+    gouve:String,
     detail:String,
 });
 
