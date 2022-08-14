@@ -32,6 +32,7 @@ router.post('/addcase', upload.single('image'), async (req, res) => {
         let dataToInsert = {
             "image":imageUrl,
             "localisation":obj,
+            "route":req.body.route,
             "caseType":req.body.caseType,
             "caseDet":req.body.caseDet,
             "gouve":req.body.gouve,
@@ -54,6 +55,38 @@ router.get('/getallcases',async(req,res)=>{
         res.status(401).json({ msg: `getting cases Failed` })
     }
 })
+router.get('/getcases/type',async(req,res)=>{
+    let reType = req.body.typed
+    try{
+        const allCases = await Case.find({"caseType":reType});
+        await res.status(201).json(allCases);
+    }catch(err){
+        console.error("getting cases failed", err);
+        res.status(401).json({ msg: `getting cases Failed` })
+    }
+})
+router.get('/getcases/gouve',async(req,res)=>{
+    let reGouve = req.body.gouve
+    try{
+        const allCases = await Case.find({"gouve":reGouve});
+        await res.status(201).json(allCases);
+    }catch(err){
+        console.error("getting cases failed", err);
+        res.status(401).json({ msg: `getting cases Failed` })
+    }
+})
+
+router.get('/getcases/route/:rr',async(req,res)=>{
+    let reRR = req.params.rr
+    try{
+        const allCases = await Case.find({"route":reRR});
+        await res.status(201).json(allCases);
+    }catch(err){
+        console.error("getting cases failed", err);
+        res.status(401).json({ msg: `getting cases Failed` })
+    }
+})
+
 
 router.delete('/deleteall',async(req,res)=>{
     try {
