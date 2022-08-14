@@ -32,7 +32,7 @@ router.post('/addcase', upload.single('image'), async (req, res) => {
         let dataToInsert = {
             "image":imageUrl,
             "localisation":obj,
-            "route":req.body.route,
+            "route":req.body.route.toUpperCase(),
             "caseType":req.body.caseType,
             "caseDet":req.body.caseDet,
             "gouve":req.body.gouve,
@@ -55,8 +55,8 @@ router.get('/getallcases',async(req,res)=>{
         res.status(401).json({ msg: `getting cases Failed` })
     }
 })
-router.get('/getcases/type',async(req,res)=>{
-    let reType = req.body.typed
+router.get('/getcases/:type',async(req,res)=>{
+    let reType = req.params.type
     try{
         const allCases = await Case.find({"caseType":reType});
         await res.status(201).json(allCases);
@@ -65,10 +65,12 @@ router.get('/getcases/type',async(req,res)=>{
         res.status(401).json({ msg: `getting cases Failed` })
     }
 })
-router.get('/getcases/gouve',async(req,res)=>{
-    let reGouve = req.body.gouve
+router.get('/getcases/gouve/:gov',async(req,res)=>{
+    let reGouve = req.params.gov
+   const str2 = reGouve.charAt(0).toUpperCase() + reGouve.slice(1);
+    console.log(str2)
     try{
-        const allCases = await Case.find({"gouve":reGouve});
+        const allCases = await Case.find({"gouve":str2});
         await res.status(201).json(allCases);
     }catch(err){
         console.error("getting cases failed", err);
@@ -77,7 +79,7 @@ router.get('/getcases/gouve',async(req,res)=>{
 })
 
 router.get('/getcases/route/:rr',async(req,res)=>{
-    let reRR = req.params.rr
+    let reRR = req.params.rr.toLocaleUpperCase()
     try{
         const allCases = await Case.find({"route":reRR});
         await res.status(201).json(allCases);
