@@ -56,7 +56,7 @@ router.get('/getallcases',async(req,res)=>{
     }
 })
 router.get('/getcases/:type',async(req,res)=>{
-    let reType = req.params.type
+    let reType = req.params.type.toLocaleUpperCase()
     try{
         const allCases = await Case.find({"caseType":reType});
         await res.status(201).json(allCases);
@@ -66,11 +66,10 @@ router.get('/getcases/:type',async(req,res)=>{
     }
 })
 router.get('/getcases/gouve/:gov',async(req,res)=>{
-    let reGouve = req.params.gov
-   const str2 = reGouve.charAt(0).toUpperCase() + reGouve.slice(1);
-    console.log(str2)
+    let reGouve = req.params.gov.toLocaleUpperCase()
+   
     try{
-        const allCases = await Case.find({"gouve":str2});
+        const allCases = await Case.find({"gouve":reGouve});
         await res.status(201).json(allCases);
     }catch(err){
         console.error("getting cases failed", err);
